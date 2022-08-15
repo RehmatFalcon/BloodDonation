@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
+using BloodDonation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using BloodDonation.Models;
 
 namespace BloodDonation.Controllers;
 

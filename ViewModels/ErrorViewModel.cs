@@ -1,4 +1,4 @@
-namespace BloodDonation.Models;
+namespace BloodDonation.ViewModels;
 
 public class ErrorViewModel
 {
