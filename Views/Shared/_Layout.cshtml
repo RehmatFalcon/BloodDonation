@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using BloodDonation.Constants
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - BloodDonation</title>
+    <title>@ViewData["Title"] - @AppConstants.AppName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="/BloodDonation.styles.css" asp-append-version="true">
@@ -28,7 +29,7 @@
                 </ul>
             </div>
             <div>
-               <partial name="partials/_authPartial"/>
+                <partial name="partials/_authPartial"/>
             </div>
         </div>
     </nav>
