@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification;
 using BloodDonation;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -11,6 +12,12 @@ builder.Services.UseBloodDonation()
 builder.Services.AddRazorPages()
     .AddRazorRuntimeCompilation();
 builder.Services.AddControllersWithViews();
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 10;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.BottomRight;
+});
 
 // Configure pipeline
 var app = builder.Build();
