@@ -1,8 +1,10 @@
 ﻿using BloodDonation.Seeder.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloodDonation.Controllers;
 
+[AllowAnonymous]
 public class SeedController : Controller
 {
     private readonly IUserSeeder _userSeeder;
