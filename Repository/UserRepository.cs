@@ -22,4 +22,23 @@ public class UserRepository : IUserRepository
             type = type
         })).ToList();
     }
+
+    public async Task<User?> GetByUserName(string identity)
+    {
+        var conn = _dbConnectionProvider.GetConnection();
+        return await conn.QuerySingleOrDefaultAsync<User>("SELECT * FROM user where lower(UserName) = lower(@userName)",
+            new
+            {
+                userName = identity
+            });
+    }
+
+    public async Task<User?> Find(long userId)
+    {
+        await using var conn = _dbConnectionProvider.GetConnection();
+        return await conn.QueryFirstOrDefaultAsync<User>("SELECT * FROM user where Id = @id", new
+        {
+            id = userId
+        });
+    }
 }

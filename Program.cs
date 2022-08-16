@@ -5,9 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure Services
 builder.Services.UseBloodDonation()
+    .AddHttpContextAccessor()
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(x => { x.LoginPath = "/Auth/Login"; });
-
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
 builder.Services.AddControllersWithViews();
 
 // Configure pipeline

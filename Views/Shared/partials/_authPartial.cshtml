@@ -1,0 +1,14 @@
+﻿@using BloodDonation.Provider.Interfaces
+@inject ICurrentUserProvider _currentUserProvider
+@if (_currentUserProvider.IsLoggedIn())
+{
+    <a class="btn btn-secondary btn-sm" href="/auth/logout">
+        Logout
+    </a>
+}
+else
+{
+    <a class="btn btn-primary btn-sm" href="/auth/login">
+        Login
+    </a>
+}

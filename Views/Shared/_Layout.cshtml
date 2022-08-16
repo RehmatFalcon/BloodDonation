@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - BloodDonation</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/BloodDonation.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="/BloodDonation.styles.css" asp-append-version="true">
 </head>
 <body>
 <header>
@@ -27,17 +27,20 @@
                     </li>
                 </ul>
             </div>
+            <div>
+               <partial name="partials/_authPartial"/>
+            </div>
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container main-content-container">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
 </div>
 
 <footer class="border-top footer text-muted">
-    <div class="container">
+    <div class="container text-center p-2">
         &copy; 2022 - BloodDonation - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
 </footer>
