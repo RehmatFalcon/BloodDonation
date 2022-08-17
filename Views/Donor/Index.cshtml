@@ -1,0 +1,69 @@
+﻿@model BloodDonation.ViewModels.DonorSearchVm
+
+@{
+    ViewBag.Title = "Search Donors";
+    Layout = "_Layout";
+}
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">
+            Donor Search
+        </h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>SN</th>
+                <th>Name</th>
+                <th>
+                    Blood Group
+                </th>
+                <th>
+                    Contact
+                </th>
+                <th>
+                    District
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Last Donation Date
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                var sn = 1;
+                foreach (var donor in Model.Result)
+                {
+                    <tr>
+                        <td>
+                            @(sn++)
+                        </td>
+                        <td>
+                            @donor.Name
+                        </td>
+                        <td>
+                            @donor.BloodGroup
+                        </td>
+                        <td>
+                            @donor.ContactNo
+                        </td>
+                        <td>
+                            @donor.District
+                        </td>
+                        <td>
+                            @donor.Address
+                        </td>
+                        <td>
+                            @donor.LastDonationDate
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

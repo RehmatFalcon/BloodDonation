@@ -1,4 +1,6 @@
-﻿namespace BloodDonation.Constants;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace BloodDonation.Constants;
 
 public static class BloodGroups
 {
@@ -13,4 +15,6 @@ public static class BloodGroups
         "AB+",
         "AB-"
     };
+
+    public static SelectList GetSelectList(string selectedValue) => new SelectList(Value, selectedValue);
 }

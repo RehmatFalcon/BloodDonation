@@ -24,12 +24,14 @@ public static class DiConfig
 
     private static void UseRepo(IServiceCollection services)
     {
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IDonorRepository, DonorRepository>();
     }
 
     private static void UseServices(IServiceCollection services)
     {
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserService, UserService>()
+            .AddScoped<IDonorService, DonorService>();
     }
 
     private static void UseMisc(IServiceCollection services)
