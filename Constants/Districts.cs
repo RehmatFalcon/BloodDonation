@@ -1,4 +1,6 @@
-﻿namespace BloodDonation.Constants;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace BloodDonation.Constants;
 
 public static class Districts
 {
@@ -82,4 +84,6 @@ public static class Districts
         "Baitadi",
         "Darchula",
     };
+
+    public static SelectList GetSelectList(string selectedValue) => new SelectList(Value, selectedValue);
 }

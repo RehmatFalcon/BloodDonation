@@ -59,7 +59,7 @@ public class DonorRepository : IDonorRepository
             BloodGroup = vm.BloodGroup,
             ContactNo = vm.ContactNo,
             lastAllowedDonationDate = DateTime.UtcNow.AddDays(-90),
-            Offset = vm.Page - 1 * vm.Limit,
+            Offset = (vm.Page - 1) * vm.Limit,
             Limit = vm.Limit
         };
         var count = await conn.ExecuteScalarAsync<long>(countQuery, p);
