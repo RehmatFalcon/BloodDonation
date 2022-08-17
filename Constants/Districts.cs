@@ -2,7 +2,7 @@
 
 public static class Districts
 {
-    public static List<string> Values = new()
+    public static List<string> Value = new()
     {
         "Jhapa",
         "Ilam",

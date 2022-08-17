@@ -1,0 +1,164 @@
+﻿@using BloodDonation.Constants
+@model BloodDonation.ViewModels.DonorRegistrationVm
+
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register @AppConstants.AppName</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/login/images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/login/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/login/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100" style="display: flex; justify-content: center; align-items: flex-start; padding:  20px">
+            <form class="w-full" method="post">
+                <div class="card-header mb-2">
+                    <h5 class="card-title mb-0">
+                        <span class="login100-form-title p-0">
+                            Register!
+                        </span>
+                    </h5>
+                </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <fieldset>
+                    <legend>
+                        Basic Details
+                    </legend>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name">Name (*)</label>
+                                <input asp-for="Name" type="text" class="form-control" required>
+                                <span asp-validation-for="Name"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="BloodGroup">Blood Group (*)</label>
+                                <select asp-for="BloodGroup" class="form-control" asp-items="Model.BloodGroupSelectList()" required></select>
+                                <span asp-validation-for="BloodGroup"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="District">District (*)</label>
+                                <select asp-for="District" class="form-control" asp-items="Model.DistrictSelectList()" required></select>
+                                <span asp-validation-for="District"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="ContactNo">Contact No (*)</label>
+                                <input asp-for="ContactNo" type="text" class="form-control" required>
+                                <span asp-validation-for="ContactNo"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Address">Address</label>
+                                <textarea asp-for="Address"  class="form-control" rows="5"></textarea>
+                                <span asp-validation-for="Address"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Note">Bio</label>
+                                <textarea asp-for="Note"  class="form-control" rows="5"></textarea>
+                                <span asp-validation-for="Note"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="LastDonationDate">Last Donation Date</label>
+                                <input asp-for="LastDonationDate" type="date" class="form-control">
+                                <span asp-validation-for="LastDonationDate"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>
+                        Login Details
+                    </legend>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="UserName">User Name (*)</label>
+                                <input asp-for="UserName" type="text" class="form-control" required>
+                                <span asp-validation-for="UserName"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Password">Password (*)</label>
+                                <input asp-for="Password" type="password" class="form-control" required>
+                                <span asp-validation-for="Password"></span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
+                        REGISTER
+                    </button>
+                </div>
+
+                <div class="text-center p-t-136">
+                    Already have an account?
+                    <a class="txt2" href="/Register">
+                        Login
+                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--===============================================================================================-->
+<script src="~/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/login/vendor/bootstrap/js/popper.js"></script>
+<script src="~/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/login/vendor/tilt/tilt.jquery.min.js"></script>
+<script >
+$(() => {
+   	$('.js-tilt').tilt({
+        scale: 1.1
+    })
+});
+
+	</script>
+<!--===============================================================================================-->
+<script src="~/login/js/main.js"></script>
+@await Component.InvokeAsync("Notyf")
+</body>
+</html>
