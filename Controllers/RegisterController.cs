@@ -54,7 +54,7 @@ public class RegisterController : Controller
         catch (Exception e)
         {
             _notyfService.Error(e.Message);
-            return Redirect("/");
+            return View(vm);
         }
     }
 }
