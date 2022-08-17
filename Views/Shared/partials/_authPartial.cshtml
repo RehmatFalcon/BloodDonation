@@ -2,9 +2,13 @@
 @inject ICurrentUserProvider _currentUserProvider
 @if (_currentUserProvider.IsLoggedIn())
 {
-    <a class="btn btn-secondary btn-sm" href="/auth/logout">
-        Logout
-    </a>
+    var currentUser = await _currentUserProvider.GetCurrentUser();
+    <div>
+        Logged in as @currentUser.UserName
+        <a class="btn btn-secondary btn-sm" href="/auth/logout">
+            Logout
+        </a>
+    </div>
 }
 else
 {
