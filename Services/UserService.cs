@@ -31,7 +31,7 @@ public class UserService : IUserService
             Password = _crypter.Hash(userDto.Password)
         };
         user.Id = await conn.ExecuteScalarAsync<long>(
-            @"INSERT INTO blood.user (UserName, Password, CreatedDate, UserLevel)
+            @"INSERT INTO user (UserName, Password, CreatedDate, UserLevel)
 VALUES (@UserName, @Password, @CreatedDate, @UserLevel);
 select LAST_INSERT_ID();
         ", user);
