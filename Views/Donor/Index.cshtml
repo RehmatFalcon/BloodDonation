@@ -1,4 +1,6 @@
-﻿@model BloodDonation.ViewModels.DonorSearchVm
+﻿@using BloodDonation.Helper
+@using BloodDonation.Constants
+@model BloodDonation.ViewModels.DonorSearchVm
 
 @{
     ViewBag.Title = "Search Donors";
@@ -11,6 +13,52 @@
         </h5>
     </div>
     <div class="card-body">
+        <form action="">
+            <div class="row">
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" type="search" class="form-control">
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label asp-for="BloodGroup"></label>
+                        <select asp-for="BloodGroup" class="form-control" asp-items="BloodGroups.GetSelectList(Model.BloodGroup).AddDefaultOption()"></select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label asp-for="District"></label>
+                        <select asp-for="District" class="form-control" asp-items="Districts.GetSelectList(Model.District).AddDefaultOption()"></select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label asp-for="Address"></label>
+                        <input asp-for="Address" type="search" class="form-control">
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label asp-for="ContactNo"></label>
+                        <input asp-for="ContactNo" type="search" class="form-control">
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <div class="form-group">
+                        <label asp-for="ShowEligibleOnly">Eligible To Donate</label>
+                        <input asp-for="ShowEligibleOnly" class="form-check" style="height: 30px; width: 30px;">
+                    </div>
+                </div>
+                <div class="w-full"></div>
+                <div class="col">
+                    <button class="btn btn-primary btn-sm my-2">
+                        <span class="fa fa-search"></span> Search
+                    </button>
+                </div>
+            </div>
+        </form>
         <table class="table table-striped table-sm">
             <thead>
             <tr>
@@ -58,7 +106,7 @@
                             @donor.Address
                         </td>
                         <td>
-                            @donor.LastDonationDate
+                            @donor.LastDonationDate?.ToString("dddd, MMM dd, yyyy")
                         </td>
                     </tr>
                 }
