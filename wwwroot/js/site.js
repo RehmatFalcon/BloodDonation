@@ -80,4 +80,37 @@ document.addEventListener("DOMContentLoaded", () => {
             x.appendChild(elm);
         }
     });
+    const APP_HELPER = {};
+    APP_HELPER.InitializeSingleTypeahead = (elem, config = {}, additionalPlugins = []) => {
+        return new TomSelect(elem, {
+            closeAfterSelect: true,
+            allowEmptyOption: true,
+            create: false,
+            plugins: ['change_listener', 'dropdown_input', ...additionalPlugins],
+            placeholder: elem.dataset.placeholder ?? "Select an option",
+            render: {
+                option: function (data, escape) {
+                    const icon = data.icon ? `<i class="${data.icon}"></i>  ` : '';
+                    return '<div>' +
+                        '<span class="title">' + icon + escape(data.text) + '</span>' +
+                        '</div>';
+                },
+                item: function (data, escape) {
+                    const icon = data.icon ? `<i class="${data.icon}"></i>  ` : '';
+                    return '<div>' +
+                        '<span class="title">' + icon + escape(data.text) + '</span>' +
+                        '</div>';
+                },
+                no_results:function(data,escape) {
+                    return '<div class="no-results"> No results found for "'+escape(data.input)+'"</div>';
+                },
+            },
+            ...config
+        });
+    };
+
+    const elems = document.querySelectorAll('select');
+    for (const elem of elems) {
+        APP_HELPER.InitializeSingleTypeahead(elem);
+    }
 });
