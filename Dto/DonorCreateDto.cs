@@ -14,4 +14,6 @@ public class DonorCreateDto : UserDto
     public string Address { get; set; }
     public string Note { get; set; }
     public DateTime? LastDonationDate { get; set; }
+
+    public long DonationCount { get; set; } = 0;
 }

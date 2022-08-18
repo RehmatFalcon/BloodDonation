@@ -12,6 +12,7 @@
       <PackageReference Include="Dapper" Version="2.0.123" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.8" />
       <PackageReference Include="MySql.Data" Version="8.0.30" />
+      <PackageReference Include="Pioneer.Pagination" Version="3.0.0" />
     </ItemGroup>
 
 </Project>

@@ -22,3 +22,8 @@ body {
 .main-content-container {
   flex-grow: 1;
 }
+
+.pagination {
+  margin: 1rem 0;
+  justify-content: center;
+}

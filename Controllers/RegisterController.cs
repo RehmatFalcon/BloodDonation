@@ -45,7 +45,8 @@ public class RegisterController : Controller
                 Note = vm.Note,
                 BloodGroup = vm.BloodGroup,
                 ContactNo = vm.ContactNo,
-                LastDonationDate = vm.LastDonationDate
+                LastDonationDate = vm.LastDonationDate,
+                DonationCount = vm.DonationCount
             };
             await _donorService.Create(dto);
             _notyfService.Success($"Congrats, {vm.UserName}. Registration complete. You can login now.");

@@ -20,6 +20,7 @@ public class DonorRegistrationVm
     public string Address { get; set; }
     public string Note { get; set; }
     public DateTime? LastDonationDate { get; set; }
+    public long DonationCount { get; set; }
 
     public SelectList BloodGroupSelectList() => new SelectList(BloodGroups.Value, BloodGroup);
     public SelectList DistrictSelectList() => new SelectList(Districts.Value, District);

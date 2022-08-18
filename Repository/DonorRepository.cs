@@ -74,4 +74,13 @@ public class DonorRepository : IDonorRepository
             TotalCount = count
         };
     }
+
+    public async Task<UserDetails?> GetByUserId(long userId)
+    {
+        await using var conn = _connectionProvider.GetConnection();
+        return await conn.QueryFirstOrDefaultAsync<UserDetails>("SELECT * FROM user_details where UserId = @userId", new
+        {
+            userId = userId
+        });
+    }
 }
