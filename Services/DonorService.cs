@@ -37,12 +37,13 @@ public class DonorService : IDonorService
             Note = dto.Note,
             ContactNo = dto.ContactNo,
             BloodGroup = dto.BloodGroup,
-            LastDonationDate = dto.LastDonationDate
+            LastDonationDate = dto.LastDonationDate,
+            DonationCount = dto.DonationCount
         };
         await using var conn = _dbConnectionProvider.GetConnection();
         userDetails.Id = await conn.ExecuteScalarAsync<long>(@"
-INSERT INTO user_details (UserId, Name, District, ContactNo, BloodGroup, Address, Note, LastDonationDate)
-VALUES (@UserId, @Name, @District, @ContactNo, @BloodGroup, @Address, @Note, @LastDonationDate);
+INSERT INTO user_details (UserId, Name, District, ContactNo, BloodGroup, Address, Note, LastDonationDate, DonationCount)
+VALUES (@UserId, @Name, @District, @ContactNo, @BloodGroup, @Address, @Note, @LastDonationDate, @DonationCount);
 select LAST_INSERT_ID();
 ", userDetails);
         tx.Complete();
@@ -61,8 +62,7 @@ select LAST_INSERT_ID();
             District = dto.District,
             Note = dto.Note,
             ContactNo = dto.ContactNo,
-            BloodGroup = dto.BloodGroup,
-            LastDonationDate = dto.LastDonationDate
+            BloodGroup = dto.BloodGroup
         };
         await conn.ExecuteAsync(
             @"UPDATE user_details set Name = @Name, District = @District, Address = @Address, BloodGroup = @BloodGroup, ContactNo = @ContactNo, Note = @Note
