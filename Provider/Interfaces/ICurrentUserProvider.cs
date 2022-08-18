@@ -7,4 +7,8 @@ public interface ICurrentUserProvider
     bool IsLoggedIn();
     Task<User?> GetCurrentUser();
     long? GetCurrentUserId();
+
+    Task<UserDetails?> GetCurrentDonor();
+
+    Task<bool> IsDonor();
 }

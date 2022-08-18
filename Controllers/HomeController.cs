@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using BloodDonation.Models;
 using BloodDonation.Provider.Interfaces;
 using BloodDonation.ViewModels;
-using Dapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BloodDonation.Controllers;
@@ -20,8 +18,6 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Index()
     {
-        await using var conn = _connectionProvider.GetConnection();
-        var users = await conn.QueryAsync<User>("SELECT * FROM user");
         return View();
     }
 
