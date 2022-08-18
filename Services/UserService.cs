@@ -55,6 +55,18 @@ select LAST_INSERT_ID();
         tx.Complete();
     }
 
+    public async Task ChangePassword(User user, string oldPassword, string newPassword)
+    {
+        using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        if (!_crypter.Verify( oldPassword, user.Password))
+        {
+            throw new Exception("Wrong password");
+        }
+
+        await ResetPassword(user.Id, newPassword);
+        tx.Complete();
+    }
+
     private async Task Validate(string userName)
     {
         if (await _userRepo.GetByUserName(userName) != null)

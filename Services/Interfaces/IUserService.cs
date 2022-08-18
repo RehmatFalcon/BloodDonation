@@ -7,4 +7,5 @@ public interface IUserService
 {
     Task<User> Create(UserDto userDto);
     Task ResetPassword(long id, string newPassword);
+    Task ChangePassword(User user, string oldPassword, string newPassword);
 }
