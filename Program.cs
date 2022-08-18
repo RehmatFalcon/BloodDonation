@@ -1,6 +1,7 @@
 using AspNetCoreHero.ToastNotification;
 using BloodDonation;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Pioneer.Pagination;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddNotyf(config =>
     config.IsDismissable = true;
     config.Position = NotyfPosition.BottomRight;
 });
+builder.Services.AddTransient<IPaginatedMetaService, PaginatedMetaService>();
 
 // Configure pipeline
 var app = builder.Build();
@@ -27,6 +29,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
 app.UseStaticFiles();
 
 app.UseRouting();
