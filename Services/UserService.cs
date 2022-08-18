@@ -43,6 +43,18 @@ select LAST_INSERT_ID();
         return user;
     }
 
+    public async Task ResetPassword(long id, string newPassword)
+    {
+        using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        await using var conn = _dbConnectionProvider.GetConnection();
+        await conn.ExecuteAsync("UPDATE user set Password = @password where Id = @id", new
+        {
+            password = _crypter.Hash(newPassword),
+            id = id
+        });
+        tx.Complete();
+    }
+
     private async Task Validate(string userName)
     {
         if (await _userRepo.GetByUserName(userName) != null)

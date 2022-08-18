@@ -1,10 +1,14 @@
 ﻿@using BloodDonation.Helper
+@using BloodDonation.Provider.Interfaces
 @using BloodDonation.Constants
 @model BloodDonation.ViewModels.DonorSearchVm
+
+@inject ICurrentUserProvider CurrentUserProvider
 
 @{
     ViewBag.Title = "Search Donors";
     Layout = "_Layout";
+    var isAdmin = !await CurrentUserProvider.IsDonor();
 }
 <div class="card">
     <div class="card-header">
@@ -79,6 +83,12 @@
                 <th>
                     Last Donation Date
                 </th>
+                @if (isAdmin)
+                {
+                    <th>
+                        Action
+                    </th>
+                }
             </tr>
             </thead>
             <tbody>
@@ -108,6 +118,18 @@
                         <td>
                             @donor.LastDonationDate?.ToString("dddd, MMM dd, yyyy")
                         </td>
+                        @if (isAdmin)
+                        {
+                            <td>
+                                <a class="btn btn-sm btn-danger req-ack" title="Reset Password"
+                                   asp-controller="Admin"
+                                   asp-action="ResetPassword"
+                                   asp-route-id="@donor.UserId"
+                                   data-ack="Are you sure you want to reset the user password?">
+                                    <span class="fa fa-undo"></span> Reset Password
+                                </a>
+                            </td>
+                        }
                     </tr>
                 }
             }

@@ -63,14 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const paginationLinks = document.querySelectorAll(".pagination li");
     paginationLinks.forEach(x => {
         x.classList.add('page-item');
-        if(x.classList.contains("current")) {
+        if (x.classList.contains("current")) {
             x.classList.add('active');
         }
         const link = x.querySelector("a")
-        if(link) {
+        if (link) {
             link.classList.add('page-link');
-        }
-        else {
+        } else {
             const elm = document.createElement("a")
             elm.href = "#";
             elm.classList.add('page-link');
@@ -101,8 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         '<span class="title">' + icon + escape(data.text) + '</span>' +
                         '</div>';
                 },
-                no_results:function(data,escape) {
-                    return '<div class="no-results"> No results found for "'+escape(data.input)+'"</div>';
+                no_results: function (data, escape) {
+                    return '<div class="no-results"> No results found for "' + escape(data.input) + '"</div>';
                 },
             },
             ...config
@@ -113,4 +112,13 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const elem of elems) {
         APP_HELPER.InitializeSingleTypeahead(elem);
     }
+
+    const allReqAckElems = document.querySelectorAll(".req-ack");
+    const askConfirm = (evt) => {
+        const userAck = confirm(evt.target.dataset.ack ?? "Are you sure you want to perform this action?");
+        if (!userAck) {
+            evt.preventDefault();
+        }
+    };
+    allReqAckElems.forEach(x => x.addEventListener("click",askConfirm));
 });
