@@ -1,0 +1,63 @@
+﻿@model BloodDonation.ViewModels.DashboardVm
+
+<div class="row">
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-body text-center text-danger">
+                <h4>
+                    @Model.Donor.Name
+                </h4>
+                <hr>
+                <div class="d-flex justify-content-center">
+                    <table class="table w-50 text-left text-danger table-borderless">
+                        <tbody>
+                        <tr>
+                            <td style="max-width: 18px">
+                                <span class="fa fa-heart"></span>
+                            </td>
+                            <td>
+                                @Model.Donor.BloodGroup
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="max-width: 18px">
+                                <span class="fa fa-phone"></span>
+                            </td>
+                            <td>
+                                @Model.Donor.ContactNo
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="fa fa-map"></span>
+                            </td>
+                            <td>
+                                @Model.Donor.District
+                                @if (!string.IsNullOrEmpty(Model.Donor.Address))
+                                {
+                                    @: &bull; @Model.Donor.Address
+                                }
+                            </td>
+                        </tr>
+                        @if (!string.IsNullOrEmpty(Model.Donor.Note))
+                        {
+                            <tr>
+                                <td colspan="2" class="text-muted">
+                                    @Model.Donor.Note
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    Last Donation Date: @(Model.Donor.LastDonationDate.HasValue ? Model.Donor.LastDonationDate.Value.ToString("yyyy-MM-dd") : "Not Specified")
+                    <hr>
+                    Donation Count: @Model.Donor.DonationCount
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-8">
+    </div>
+</div>
