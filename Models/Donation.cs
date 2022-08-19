@@ -23,4 +23,8 @@ public class Donation
     public string Type { get; set; } = DonationTypes.Donation;
 
     public string Status { get; set; } = DonationStatus.Unverified;
+
+    public bool IsVerified() => Status == DonationStatus.Verified;
+
+    public bool IsDonation() => Type == DonationTypes.Donation;
 }

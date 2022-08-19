@@ -31,7 +31,8 @@ public static class DiConfig
     private static void UseServices(IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>()
-            .AddScoped<IDonorService, DonorService>();
+            .AddScoped<IDonorService, DonorService>()
+            .AddScoped<IDonationService, DonationService>();
     }
 
     private static void UseMisc(IServiceCollection services)
