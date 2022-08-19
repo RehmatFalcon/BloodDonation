@@ -3,11 +3,22 @@
 @if (_currentUserProvider.IsLoggedIn())
 {
     var currentUser = await _currentUserProvider.GetCurrentUser();
-    <div>
-        Logged in as @currentUser.UserName
-        <a class="btn btn-secondary btn-sm" href="/auth/logout">
-            Logout
-        </a>
+    <div class="btn-group dropstart">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+            @currentUser.UserName
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item" href="/Profile/ChangePassword">
+                    Change Password
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="/auth/logout">
+                    <span class="fa fa-power-off"></span> Logout
+                </a>
+            </li>
+        </ul>
     </div>
 }
 else
