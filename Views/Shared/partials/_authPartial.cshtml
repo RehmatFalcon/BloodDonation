@@ -1,5 +1,8 @@
 ﻿@using BloodDonation.Provider.Interfaces
 @inject ICurrentUserProvider _currentUserProvider
+@{
+    var isAdmin = !await _currentUserProvider.IsDonor();
+}
 @if (_currentUserProvider.IsLoggedIn())
 {
     var currentUser = await _currentUserProvider.GetCurrentUser();
@@ -8,11 +11,14 @@
             @currentUser.UserName
         </button>
         <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item" href="/Profile/UpdateProfile">
-                    Update Profile
-                </a>
-            </li>
+            @if (!isAdmin)
+            {
+                <li>
+                    <a class="dropdown-item" href="/Profile/UpdateProfile">
+                        Update Profile
+                    </a>
+                </li>
+            }
             <li>
                 <a class="dropdown-item" href="/Profile/ChangePassword">
                     Change Password
