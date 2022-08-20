@@ -33,7 +33,7 @@ public class DonationRepository : IDonationRepository
         });
     }
 
-    public async Task<IEnumerable<Donation>> GetRecentDonations(int donorId, int count = 5)
+    public async Task<IEnumerable<Donation>> GetRecentDonations(long donorId, int count = 5)
     {
         await using var conn = _connectionProvider.GetConnection();
         return await conn.QueryAsync<Donation>("SELECT * from donation where UserDetailsId = @donorId LIMIT @count", new
