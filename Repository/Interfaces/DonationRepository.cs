@@ -2,6 +2,7 @@
 using BloodDonation.Models;
 using BloodDonation.Provider.Interfaces;
 using BloodDonation.Results;
+using BloodDonation.ViewModels;
 using Dapper;
 
 namespace BloodDonation.Repository.Interfaces;
@@ -43,19 +44,68 @@ public class DonationRepository : IDonationRepository
         });
     }
 
-    public async Task<PagedResult<Donation>> GetDonations(DateTime from, DateTime to, int page, int limit)
+    public async Task<PagedResult<Donation>> GetDonations(DonationSearchVm vm, long? donorId)
     {
         await using var conn = _connectionProvider.GetConnection();
-        var query = "SELECT * FROM donation where date(DATE) BETWEEN date(@from) and date(@to) and status = @status";
+        var query = "SELECT * FROM donation where date(DATE) BETWEEN date(@From) and date(@To)";
+
+        if (!string.IsNullOrEmpty(vm.Status))
+        {
+            query += " and Status = @Status";
+        }
+
+        if (!string.IsNullOrEmpty(vm.Name))
+        {
+            query += " and Name like '%@Name%'";
+        }
+
+        if (!string.IsNullOrEmpty(vm.Receiver))
+        {
+            query += " and Receiver like '%@Receiver%'";
+        }
+
+        if (!string.IsNullOrEmpty(vm.DonationDistrict))
+        {
+            query += " and DonationDistrict = @DonationDistrict";
+        }
+
+        if (!string.IsNullOrEmpty(vm.Type))
+        {
+            query += " and Type = @Type";
+        }
+
+        if (!string.IsNullOrEmpty(vm.DonationLocation))
+        {
+            query += " and DonationLocation like '%@DonationLocation%'";
+        }
+
+        if (!string.IsNullOrEmpty(vm.BloodGroup))
+        {
+            query += " and BloodGroup = @BloodGroup";
+        }
+
+        if (donorId.HasValue)
+        {
+            query += " and UserDetailsId = @DonorId";
+        }
+
+
         var countQuery = query.Replace("SELECT * ", "SELECT COUNT(*) ");
         query += " limit @offset, @limit";
         var p = new
         {
-            from = from.Date,
-            to = to.Date,
-            status = DonationStatus.Verified,
-            offset = (page - 1) * limit,
-            limit = limit,
+            From = vm.From.Date,
+            To = vm.To.Date,
+            Status = vm.Status,
+            Name = vm.Name,
+            Receiver = vm.Receiver,
+            DonationDistrict = vm.DonationDistrict,
+            Type = vm.Type,
+            DonationLocation = vm.DonationLocation,
+            BloodGroup = vm.BloodGroup,
+            DonorId = donorId,
+            offset = (vm.Page - 1) * vm.Limit,
+            limit = vm.Limit,
         };
         var totalCount = await conn.ExecuteScalarAsync<int>(countQuery, p);
         var data = await conn.QueryAsync<Donation>(query, p);
@@ -64,8 +114,8 @@ public class DonationRepository : IDonationRepository
         {
             Collection = data.ToList(),
             TotalCount = totalCount,
-            Limit = limit,
-            Page = page,
+            Limit = vm.Limit,
+            Page = vm.Page,
         };
     }
 }
