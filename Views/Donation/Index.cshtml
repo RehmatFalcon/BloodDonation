@@ -117,6 +117,46 @@
                 }
             </tr>
             </thead>
+            <tbody>
+            @{
+                var sn = 1;
+                foreach (var donation in Model.Result)
+                {
+                    <tr>
+                        <td>
+                            @(sn++)
+                        </td>
+                        <td>
+                            @donation.Date.ToString("yyyy-MM-dd")
+                        </td>
+                        <td>
+                            @donation.Type
+                        </td>
+                        <td>
+                            @donation.Name
+                        </td>
+                        <td>
+                            @donation.BloodGroup
+                        </td>
+                        <td>
+                            @donation.DonationDistrict
+                        </td>
+                        <td>
+                            @donation.DonationLocation
+                        </td>
+                        <td>
+                            @donation.Status
+                        </td>
+                        @if (!isDonor)
+                        {
+                            <td>
+                                
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            </tbody>
         </table>
     </div>
 </div>
