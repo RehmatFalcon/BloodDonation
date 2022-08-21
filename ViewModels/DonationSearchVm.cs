@@ -22,7 +22,7 @@ public class DonationSearchVm : PaginationFilterVm
     [DisplayName("Location (Organization/Program)")]
     public string? DonationLocation { get; set; }
 
-    [DisplayName("Receiver")] public string? Receiver { get; set; }
+    [DisplayName("Secondary Party")] public string? Receiver { get; set; }
 
     // View Self
     [DisplayName("View Self Info")] public bool IsSelf { get; set; }

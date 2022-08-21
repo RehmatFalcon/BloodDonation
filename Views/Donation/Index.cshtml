@@ -11,10 +11,16 @@
     var isDonor = await CurrentUserProvider.IsDonor();
 }
 <div class="card">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between">
         <h5 class="card-title">
             Search Donation
         </h5>
+        @if (isDonor)
+        {
+            <a class="btn btn-sm btn-outline-primary" href="/Donation/New">
+                <span class="fa fa-plus"></span> Add Record
+            </a>
+        }
     </div>
     <div class="card-body">
         <form action="">
@@ -150,7 +156,7 @@
                         @if (!isDonor)
                         {
                             <td>
-                                
+
                             </td>
                         }
                     </tr>

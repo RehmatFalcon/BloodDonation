@@ -1,0 +1,118 @@
+﻿@using BloodDonation.Helper
+@using BloodDonation.Provider.Interfaces
+@using BloodDonation.Constants
+@model BloodDonation.Dto.DonationRecordVm
+@inject ICurrentUserProvider CurrentUserProvider
+
+@{
+    ViewBag.Title = "Record Donation";
+    var donor = await CurrentUserProvider.GetCurrentDonor();
+    var isDonor = await CurrentUserProvider.IsDonor();
+}
+<div class="row">
+    <div class="col-12 col-md-8 offset-md-2">
+        <form class="card" method="post">
+            <div class="card-header d-flex justify-content-between">
+                <h5 class="card-title">
+                    Record Donation
+                </h5>
+                @if (isDonor)
+                {
+                    <div>
+                        <label class="user-select-none">
+                            <input type="checkbox" id="UseSelf"/> Use Self Information
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="card-body">
+                <div asp-validation-summary="All"></div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Date"></label>
+                            <input asp-for="Date" type="date" class="form-control" required>
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Type"></label>
+                            <select asp-for="Type" asp-items="DonationTypes.GetSelectList(Model.Type).AddDefaultOption()" class="form-control" required></select>
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" required>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ContactNo"></label>
+                            <input asp-for="ContactNo" class="form-control" required>
+                            <span asp-validation-for="ContactNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="BloodGroup"></label>
+                            <select asp-for="BloodGroup" asp-items="BloodGroups.GetSelectList(Model.BloodGroup).AddDefaultOption()" class="form-control" required></select>
+                            <span asp-validation-for="BloodGroup" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="DonationDistrict"></label>
+                            <select asp-for="DonationDistrict" asp-items="Districts.GetSelectList(Model.DonationDistrict).AddDefaultOption()" class="form-control" required></select>
+                            <span asp-validation-for="DonationDistrict" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="DonationLocation"></label>
+                            <input asp-for="DonationLocation" class="form-control">
+                            <span asp-validation-for="DonationLocation" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Receiver"></label>
+                            <input asp-for="Receiver" class="form-control">
+                            <span asp-validation-for="Receiver" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success">
+                    <span class="fa fa-check"></span> Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+    const NameElm = document.querySelector("#Name");
+    const ContactNoElm = document.querySelector("#ContactNo");
+    const BloodGroupElm = document.querySelector("#BloodGroup");
+    const DistrictElm = document.querySelector("#District");
+    
+    const useSelfElm = document.querySelector("#UseSelf");
+    
+    useSelfElm && useSelfElm.addEventListener('change', () => {
+        if (useSelfElm.checked) {
+            NameElm.value = '@donor?.Name';
+            ContactNoElm.value = '@donor?.ContactNo';
+            BloodGroupElm.value = '@donor?.BloodGroup';
+            DistrictElm.value = '@donor?.District';
+        }
+    });
+    
+    </script>
+}
