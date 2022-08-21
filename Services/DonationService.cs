@@ -71,6 +71,20 @@ SELECT LAST_INSERT_ID();
         tx.Complete();
     }
 
+    public async Task Reject(Donation donation)
+    {
+        using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        if (donation.Status == DonationStatus.Verified) throw new Exception("Record already verified");
+        await using var conn = _connectionProvider.GetConnection();
+        donation.Status = DonationStatus.Rejected;
+        await conn.ExecuteScalarAsync("UPDATE donation SET Status = @status where Id = @Id", new
+        {
+            Id = donation.Id,
+            status = donation.Status
+        });
+        tx.Complete();
+    }
+
     public async Task Delete(Donation donation)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);

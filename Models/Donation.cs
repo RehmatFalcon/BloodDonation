@@ -31,4 +31,6 @@ public class Donation
     public bool IsVerified() => Status == DonationStatus.Verified;
 
     public bool IsDonation() => Type == DonationTypes.Donation;
+
+    public string GetFilePath() => "/Uploads/" + File;
 }
