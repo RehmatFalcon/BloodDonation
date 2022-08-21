@@ -22,6 +22,8 @@ public class Donation
     // Name of the other person if involved
     public string Receiver { get; set; }
 
+    public string? File { get; set; }
+
     public string Type { get; set; } = DonationTypes.Donation;
 
     public string Status { get; set; } = DonationStatus.Unverified;

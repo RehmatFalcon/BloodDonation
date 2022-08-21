@@ -1,4 +1,6 @@
 ﻿using BloodDonation.Crypter.Interfaces;
+using BloodDonation.Helper;
+using BloodDonation.Helper.Interfaces;
 using BloodDonation.Manager;
 using BloodDonation.Manager.Interfaces;
 using BloodDonation.Provider;
@@ -42,6 +44,7 @@ public static class DiConfig
             .AddScoped<ICrypter, Crypter.Crypter>()
             .AddScoped<IUserSeeder, UserSeeder>()
             .AddScoped<IAuthManager, AuthManager>()
-            .AddScoped<ICurrentUserProvider, CurrentUserProvider>();
+            .AddScoped<ICurrentUserProvider, CurrentUserProvider>()
+            .AddScoped<IFileHelper, FileHelper>();
     }
 }

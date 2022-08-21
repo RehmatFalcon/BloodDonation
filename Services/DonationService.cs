@@ -1,6 +1,7 @@
 ﻿using System.Transactions;
 using BloodDonation.Constants;
 using BloodDonation.Dto;
+using BloodDonation.Helper.Interfaces;
 using BloodDonation.Models;
 using BloodDonation.Provider.Interfaces;
 using BloodDonation.Services.Interfaces;
@@ -11,16 +12,24 @@ namespace BloodDonation.Services;
 public class DonationService : IDonationService
 {
     private readonly IDbConnectionProvider _connectionProvider;
+    private readonly IFileHelper _fileHelper;
 
-    public DonationService(IDbConnectionProvider connectionProvider)
+    public DonationService(IDbConnectionProvider connectionProvider, IFileHelper fileHelper)
     {
         _connectionProvider = connectionProvider;
+        _fileHelper = fileHelper;
     }
 
     public async Task<Donation> Create(DonationCreateDto dto)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await using var conn = _connectionProvider.GetConnection();
+        string? filePath = null;
+        if (dto.File != null)
+        {
+            filePath = await _fileHelper.Save(dto.File);
+        }
+
         var donation = new Donation()
         {
             Date = dto.Date,
@@ -32,12 +41,14 @@ public class DonationService : IDonationService
             ContactNo = dto.ContactNo,
             DonationDistrict = dto.DonationDistrict,
             DonationLocation = dto.DonationLocation,
-            UserDetailsId = dto.UserDetailsId
+            UserDetailsId = dto.UserDetailsId,
+            File = filePath
         };
+
         donation.Id = await conn.ExecuteScalarAsync<int>(
             @"INSERT INTO blood.donation (UserDetailsId, Date, Name, BloodGroup, ContactNo, DonationDistrict, DonationLocation, Receiver,
-                            Type, Status)
-VALUES (@UserDetailsId, @Date, @Name, @BloodGroup, @ContactNo, @DonationDistrict, @DonationLocation, @Receiver, @Type, @Status);
+                            Type, Status, File)
+VALUES (@UserDetailsId, @Date, @Name, @BloodGroup, @ContactNo, @DonationDistrict, @DonationLocation, @Receiver, @Type, @Status, @File);
 SELECT LAST_INSERT_ID();
 ", donation);
         await HandleDonationRecordSnapshot(donation);
