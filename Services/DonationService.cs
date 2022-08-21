@@ -35,9 +35,9 @@ public class DonationService : IDonationService
             UserDetailsId = dto.UserDetailsId
         };
         donation.Id = await conn.ExecuteScalarAsync<int>(
-            @"INSERT INTO blood.donation (UserDetailsId, Name, BloodGroup, ContactNo, DonationDistrict, DonationLocation, Receiver,
+            @"INSERT INTO blood.donation (UserDetailsId, Date, Name, BloodGroup, ContactNo, DonationDistrict, DonationLocation, Receiver,
                             Type, Status)
-VALUES (@UserDetailsId, @Name, @BloodGroup, @ContactNo, @DonationDistrict, @DonationLocation, @Receiver, @Type, @Status);
+VALUES (@UserDetailsId, @Date, @Name, @BloodGroup, @ContactNo, @DonationDistrict, @DonationLocation, @Receiver, @Type, @Status);
 SELECT LAST_INSERT_ID();
 ", donation);
         await HandleDonationRecordSnapshot(donation);

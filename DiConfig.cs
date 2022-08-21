@@ -25,7 +25,8 @@ public static class DiConfig
     private static void UseRepo(IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IDonorRepository, DonorRepository>();
+            .AddScoped<IDonorRepository, DonorRepository>()
+            .AddScoped<IDonationRepository, DonationRepository>();
     }
 
     private static void UseServices(IServiceCollection services)

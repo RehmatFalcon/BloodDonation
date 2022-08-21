@@ -1,0 +1,168 @@
+﻿@using BloodDonation.Helper
+@using BloodDonation.Provider.Interfaces
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using BloodDonation.Constants
+@model BloodDonation.ViewModels.DonationSearchVm
+
+@inject ICurrentUserProvider CurrentUserProvider
+
+@{
+    ViewBag.Title = "Search Donation";
+    var isDonor = await CurrentUserProvider.IsDonor();
+}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title">
+            Search Donation
+        </h5>
+        @if (isDonor)
+        {
+            <a class="btn btn-sm btn-outline-primary" href="/Donation/New">
+                <span class="fa fa-plus"></span> Add Record
+            </a>
+        }
+    </div>
+    <div class="card-body">
+        <form action="">
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label asp-for="From"></label>
+                        <input type="date" asp-for="From" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label asp-for="To"></label>
+                        <input type="date" asp-for="To" class="form-control" required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input type="search" asp-for="Name" class="form-control">
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label asp-for="DonationLocation"></label>
+                        <input type="search" asp-for="DonationLocation" class="form-control">
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label asp-for="BloodGroup"></label>
+                        <select asp-for="BloodGroup" asp-items="@BloodGroups.GetSelectList(Model.BloodGroup).AddDefaultOption()" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label asp-for="DonationDistrict"></label>
+                        <select asp-for="DonationDistrict" asp-items="@Districts.GetSelectList(Model.DonationDistrict).AddDefaultOption()" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Status"></label>
+                        <select asp-for="Status" asp-items="@DonationStatus.GetSelectList(Model.DonationDistrict).AddDefaultOption()" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Type"></label>
+                        <select asp-for="Status" asp-items="@DonationTypes.GetSelectList(Model.DonationDistrict).AddDefaultOption()" class="form-control"></select>
+                    </div>
+                </div>
+                @if (isDonor)
+                {
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <input type="checkbox" asp-for="IsSelf">
+                            <label asp-for="IsSelf"></label>
+                        </div>
+                    </div>
+                }
+            </div>
+            <button class="btn btn-primary btn-sm mt-2">
+                <span class="fa fa-search"></span> Search
+            </button>
+        </form>
+        <hr>
+        <table class="table table-sm table-striped">
+            <thead>
+            <tr>
+                <th>
+                    SN
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Donor/Receiver
+                </th>
+                <th>
+                    Blood Group
+                </th>
+                <th>
+                    District
+                </th>
+                <th>
+                    Organization/Program
+                </th>
+                <th>
+                    Status
+                </th>
+                @if (!isDonor)
+                {
+                    <th>
+                        Action
+                    </th>
+                }
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                var sn = 1;
+                foreach (var donation in Model.Result)
+                {
+                    <tr>
+                        <td>
+                            @(sn++)
+                        </td>
+                        <td>
+                            @donation.Date.ToString("yyyy-MM-dd")
+                        </td>
+                        <td>
+                            @donation.Type
+                        </td>
+                        <td>
+                            @donation.Name
+                        </td>
+                        <td>
+                            @donation.BloodGroup
+                        </td>
+                        <td>
+                            @donation.DonationDistrict
+                        </td>
+                        <td>
+                            @donation.DonationLocation
+                        </td>
+                        <td>
+                            @donation.Status
+                        </td>
+                        @if (!isDonor)
+                        {
+                            <td>
+
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -18,6 +18,8 @@ public class Donation
 
     public string DonationDistrict { get; set; }
     public string DonationLocation { get; set; }
+
+    // Name of the other person if involved
     public string Receiver { get; set; }
 
     public string Type { get; set; } = DonationTypes.Donation;

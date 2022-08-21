@@ -6,4 +6,5 @@ public class DashboardVm
 {
     public bool IsAdmin { get; set; }
     public UserDetails? Donor { get; set; }
+    public IEnumerable<Donation> RecentDonations;
 }
