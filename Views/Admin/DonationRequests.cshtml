@@ -1,0 +1,94 @@
+﻿@using BloodDonation.Provider.Interfaces
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<BloodDonation.Models.Donation>
+
+@inject ICurrentUserProvider CurrentUserProvider
+
+@{
+    ViewBag.Title = "Donation Requests";
+}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title">
+            Donation Requests
+        </h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-sm table-striped">
+            <thead>
+            <tr>
+                <th>
+                    SN
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Donor/Receiver
+                </th>
+                <th>
+                    Blood Group
+                </th>
+                <th>
+                    District
+                </th>
+                <th>
+                    Organization/Program
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                var sn = 1;
+                foreach (var donation in Model)
+                {
+                    <tr>
+                        <td>
+                            @(sn++)
+                        </td>
+                        <td>
+                            @donation.Date.ToString("yyyy-MM-dd")
+                        </td>
+                        <td>
+                            @donation.Type
+                        </td>
+                        <td>
+                            @donation.Name
+                        </td>
+                        <td>
+                            @donation.BloodGroup
+                        </td>
+                        <td>
+                            @donation.DonationDistrict
+                        </td>
+                        <td>
+                            @donation.DonationLocation
+                        </td>
+                        <td>
+                            @donation.Status
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(donation.File))
+                            {
+                                <a href="@donation.GetFilePath()" class="btn btn-outline-primary" target="_blank">
+                                    View File
+                                </a>   
+                            }
+                            <partial name="_ApproveRejectDonationRequestPartial" model="donation"/>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

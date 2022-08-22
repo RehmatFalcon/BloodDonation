@@ -84,7 +84,8 @@ public class DonationController : Controller
                 DonationLocation = vm.DonationLocation,
                 UserDetailsId = (await _currentUserProvider.GetCurrentDonor())!.Id,
                 Type = vm.Type,
-                Status = DonationStatus.Unverified
+                Status = DonationStatus.Unverified,
+                File = vm.File
             };
             await _donationService.Create(dto);
             _notyfService.Success("Donation Recorded");

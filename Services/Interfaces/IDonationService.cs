@@ -8,4 +8,5 @@ public interface IDonationService
     Task<Donation> Create(DonationCreateDto dto);
     Task Approve(Donation donation);
     Task Delete(Donation donation);
+    Task Reject(Donation donation);
 }

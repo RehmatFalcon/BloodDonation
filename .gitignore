@@ -3,3 +3,5 @@ bin/
 .idea/
 .vs/
 appsettings.Development.json
+
+wwwroot/Uploads

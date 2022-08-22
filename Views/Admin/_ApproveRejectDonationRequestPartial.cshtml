@@ -1,0 +1,11 @@
+﻿@model BloodDonation.Models.Donation
+
+
+<a class="btn btn-success req-ack" asp-action="ApproveRequest" asp-route-id="@Model.Id"
+   data-ack="Are you sure you want to approve this request? This action cannot be reversed">
+    Approve
+</a>
+<a asp-action="RejectRequest" asp-route-id="@Model.Id" class="btn btn-danger req-ack"
+   data-ack="Are you sure you want to reject this request? This action cannot be reversed">
+    Reject
+</a>

@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BloodDonation.Provider.Interfaces;
+using BloodDonation.Repository;
 using BloodDonation.Repository.Interfaces;
 using BloodDonation.Services.Interfaces;
 using BloodDonation.ViewModels;
@@ -13,14 +14,19 @@ public class AdminController : Controller
     private readonly INotyfService _notyfService;
     private readonly IUserService _userService;
     private readonly ICurrentUserProvider _currentUserProvider;
+    private readonly IDonationRepository _donationRepository;
+    private readonly IDonationService _donationService;
 
     public AdminController(IUserRepository userRepo, INotyfService notyfService, IUserService userService,
-        ICurrentUserProvider currentUserProvider)
+        ICurrentUserProvider currentUserProvider, IDonationRepository donationRepository,
+        IDonationService donationService)
     {
         _userRepo = userRepo;
         _notyfService = notyfService;
         _userService = userService;
         _currentUserProvider = currentUserProvider;
+        _donationRepository = donationRepository;
+        _donationService = donationService;
     }
 
     public async Task<IActionResult> ResetPassword(long id)
@@ -39,6 +45,46 @@ public class AdminController : Controller
                 NewPassword = newPassword
             };
             return View(vm);
+        }
+        catch (Exception e)
+        {
+            _notyfService.Error(e.Message);
+            return Redirect("/");
+        }
+    }
+
+    public async Task<IActionResult> DonationRequests()
+    {
+        var requests = await _donationRepository.GetRequests();
+        return View(requests);
+    }
+
+    public async Task<IActionResult> ApproveRequest(long id)
+    {
+        try
+        {
+            var donation = await _donationRepository.Find(id);
+            if (donation == null) throw new Exception("Donation not found");
+            await _donationService.Approve(donation);
+            _notyfService.Success($"Donation #{id} Approved");
+            return RedirectToAction("DonationRequests");
+        }
+        catch (Exception e)
+        {
+            _notyfService.Error(e.Message);
+            return Redirect("/");
+        }
+    }
+
+    public async Task<IActionResult> RejectRequest(long id)
+    {
+        try
+        {
+            var donation = await _donationRepository.Find(id);
+            if (donation == null) throw new Exception("Donation not found");
+            await _donationService.Reject(donation);
+            _notyfService.Information($"Donation #{id} Rejected");
+            return RedirectToAction("DonationRequests");
         }
         catch (Exception e)
         {

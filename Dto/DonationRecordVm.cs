@@ -7,7 +7,7 @@ public class DonationRecordVm
 {
     [DisplayName("Date")] public DateTime Date { get; set; } = DateTime.UtcNow;
 
-    [DisplayName("Donor/Recipient")] public string Name { get; set; }
+    [DisplayName("Donor/Recipient Name")] public string Name { get; set; }
 
     [DisplayName("Blood Group")] public string BloodGroup { get; set; }
 
@@ -20,8 +20,10 @@ public class DonationRecordVm
     public string DonationLocation { get; set; }
 
 
-    [DisplayName("Secondary Party")] public string Receiver { get; set; }
+    [DisplayName("Secondary Party")] public string? Receiver { get; set; }
 
 
     [DisplayName("Donation/Receipt")] public string Type { get; set; } = DonationTypes.Donation;
+
+    [DisplayName("Document")] public IFormFile? File { get; set; }
 }

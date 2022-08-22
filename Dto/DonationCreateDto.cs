@@ -18,4 +18,6 @@ public class DonationCreateDto
     public string Type { get; set; } = DonationTypes.Donation;
 
     public string Status { get; set; } = DonationStatus.Unverified;
+    
+    public IFormFile? File { get; set; }
 }
